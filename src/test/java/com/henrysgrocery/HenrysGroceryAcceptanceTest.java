@@ -19,7 +19,7 @@ public class HenrysGroceryAcceptanceTest {
         shoppingItems.add("BREAD");
         shoppingItems.add("BREAD");
         ShoppingCalculator shoppingCalculator = new ShoppingCalculator(shoppingItems);
-        BigDecimal calculation = shoppingCalculator.calculate(LocalDateTime.now());
+        BigDecimal calculation = shoppingCalculator.calculate();
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(3.15));
     }
 }

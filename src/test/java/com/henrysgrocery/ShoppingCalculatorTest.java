@@ -18,7 +18,7 @@ public class ShoppingCalculatorTest {
         shoppingItems.add("BREAD");
         shoppingItems.add("MILK");
         ShoppingCalculator shoppingCalculator = new ShoppingCalculator(shoppingItems);
-        BigDecimal calculation = shoppingCalculator.calculate(LocalDateTime.now());
+        BigDecimal calculation = shoppingCalculator.calculate();
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(2.75));
     }
 
