@@ -12,6 +12,8 @@ public class ShoppingCalculator {
     private List<String> items;
 
     public BigDecimal calculate(LocalDateTime now) {
-        return null;
+        return items.stream()
+                .map(s->Item.valueOf(s.toUpperCase()).getPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
