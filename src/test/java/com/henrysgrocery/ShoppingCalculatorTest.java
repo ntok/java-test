@@ -26,18 +26,18 @@ public class ShoppingCalculatorTest {
     @Mock
     private SoupOffer soupOffer;
 
-    private List<Offer> offers;
+    private List<DiscountCalculator> discountCalculators;
 
     @Before
     public void setUp() {
-        offers = singletonList(soupOffer);
+        discountCalculators = singletonList(soupOffer);
     }
 
     @Test
     public void whenNoDiscountApplied_thenCalculateShoppingCost() {
         when(soupOffer.calculateDiscount(anyList(), any())).thenReturn(BigDecimal.valueOf(0.0));
 
-        BigDecimal calculation = new ShoppingCalculator(asList(SOUP, BREAD, MILK), offers).calculate(LocalDateTime.now());
+        BigDecimal calculation = new ShoppingCalculator(asList(SOUP, BREAD, MILK), discountCalculators).calculate(LocalDateTime.now());
 
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(2.75));
     }
@@ -46,14 +46,14 @@ public class ShoppingCalculatorTest {
     public void whenItemListIsEmpty_thenCalculateShoppingCostAsZero() {
         when(soupOffer.calculateDiscount(anyList(), any())).thenReturn(BigDecimal.valueOf(0.0));
 
-        BigDecimal calculation = new ShoppingCalculator(new ArrayList<>(), offers).calculate(LocalDateTime.now());
+        BigDecimal calculation = new ShoppingCalculator(new ArrayList<>(), discountCalculators).calculate(LocalDateTime.now());
 
         assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(0));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenItemListIsNull_thenCalculateShoppingCostAsZero() {
-        new ShoppingCalculator(null, offers).calculate(LocalDateTime.now());
+        new ShoppingCalculator(null, discountCalculators).calculate(LocalDateTime.now());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ShoppingCalculatorTest {
         List<Item> items = asList(SOUP, SOUP, BREAD, MILK);
 
         LocalDateTime shoppingDate = LocalDateTime.now();
-        BigDecimal calculation = new ShoppingCalculator(items, offers).calculate(shoppingDate);
+        BigDecimal calculation = new ShoppingCalculator(items, discountCalculators).calculate(shoppingDate);
 
         assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(3.00));
         verify(soupOffer).calculateDiscount(items, shoppingDate);

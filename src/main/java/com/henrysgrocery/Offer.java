@@ -1,14 +1,17 @@
 package com.henrysgrocery;
 
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+
 import java.time.LocalDateTime;
-import java.util.List;
 
-public interface Offer {
+@AllArgsConstructor
+abstract class Offer {
+    protected LocalDateTime offerStartDate;
+    protected LocalDateTime offerEndDate;
 
-    BigDecimal calculateDiscount(List<Item> shoppingList, LocalDateTime shoppingDate);
-
-    default long getItemCount(List<Item> shoppingList, Item searchItem) {
-        return shoppingList.stream().filter(item -> item.equals(searchItem)).count();
+    boolean isOfferValid(LocalDateTime shoppingDate) {
+        return !shoppingDate.isBefore(offerStartDate)
+                && !shoppingDate.isAfter(offerEndDate);
     }
+
 }

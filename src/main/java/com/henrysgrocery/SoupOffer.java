@@ -1,7 +1,5 @@
 package com.henrysgrocery;
 
-import lombok.AllArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,16 +7,16 @@ import java.util.List;
 import static com.henrysgrocery.Item.BREAD;
 import static com.henrysgrocery.Item.SOUP;
 
-@AllArgsConstructor
-public class SoupOffer implements Offer {
+public class SoupOffer extends Offer implements DiscountCalculator {
     private static final BigDecimal DISCOUNT_PER_QUANTITY = BREAD.getPrice().divide(BigDecimal.valueOf(2));
-    private LocalDateTime offerStartDate;
-    private LocalDateTime offerEndDate;
+
+    public SoupOffer(LocalDateTime offerStartDate, LocalDateTime offerEndDate) {
+        super(offerStartDate, offerEndDate);
+    }
 
     @Override
     public BigDecimal calculateDiscount(List<Item> shoppingList, LocalDateTime shoppingDate) {
-        if ((shoppingDate.isBefore(offerStartDate))
-                || (shoppingDate.isAfter(offerEndDate))) {
+        if (!isOfferValid(shoppingDate)) {
             return BigDecimal.ZERO;
         }
 

@@ -1,23 +1,20 @@
 package com.henrysgrocery;
 
-import lombok.AllArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.henrysgrocery.Item.APPLE;
 
-@AllArgsConstructor
-public class AppleOffer implements Offer {
+public class AppleOffer extends Offer implements DiscountCalculator {
 
-    private LocalDateTime offerStartDate;
-    private LocalDateTime offerEndDate;
+    public AppleOffer(LocalDateTime offerStartDate, LocalDateTime offerEndDate) {
+        super(offerStartDate, offerEndDate);
+    }
 
     @Override
     public BigDecimal calculateDiscount(List<Item> shoppingList, LocalDateTime shoppingDate) {
-        if ((shoppingDate.isBefore(offerStartDate))
-                || (shoppingDate.isAfter(offerEndDate))) {
+        if (!isOfferValid(shoppingDate)) {
             return BigDecimal.ZERO;
         }
 
@@ -25,5 +22,6 @@ public class AppleOffer implements Offer {
 
         return BigDecimal.valueOf(0.01).multiply(BigDecimal.valueOf(discountQuantity));
     }
+
 
 }

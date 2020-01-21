@@ -14,18 +14,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class HenrysGroceryAcceptanceTest {
 
-    private List<Offer> offers;
+    private List<DiscountCalculator> discountCalculators;
 
     @Before
     public void setUp() {
-        offers = asList(new SoupOffer(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(7)),
+        discountCalculators = asList(new SoupOffer(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(7)),
                 new AppleOffer(LocalDateTime.now().plusDays(3), LocalDateTime.now().plusMonths(1).with(lastDayOfMonth()))
         );
     }
 
     @Test
     public void whenThreeTinsOfSoupAndTwoBreadToday_thenCalculateCost() {
-        BigDecimal calculation = new ShoppingCalculator(asList(SOUP, SOUP, SOUP, BREAD, BREAD), offers)
+        BigDecimal calculation = new ShoppingCalculator(asList(SOUP, SOUP, SOUP, BREAD, BREAD), discountCalculators)
                 .calculate(LocalDateTime.now());
 
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(3.15));
@@ -33,7 +33,7 @@ public class HenrysGroceryAcceptanceTest {
 
     @Test
     public void whenSixApplesAndSingleMilkToday_thenCalculateCost() {
-        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), offers)
+        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), discountCalculators)
                 .calculate(LocalDateTime.now());
 
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.90));
