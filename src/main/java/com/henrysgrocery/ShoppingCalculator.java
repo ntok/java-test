@@ -10,7 +10,7 @@ import java.util.List;
 public class ShoppingCalculator {
 
     private List<Item> items;
-    private SoupOffer soupOffer;
+    private List<Offer> offers;
 
     public BigDecimal calculate(LocalDateTime shoppingDate) {
         if (items == null) {
@@ -19,6 +19,11 @@ public class ShoppingCalculator {
         BigDecimal basketPrice = items.stream()
                 .map(Item::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return basketPrice.subtract(soupOffer.calculateDiscount(items, shoppingDate));
+
+        BigDecimal totalDiscountForAllOffers = offers.stream()
+                .map(calc -> calc.calculateDiscount(items, shoppingDate))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return basketPrice.subtract(totalDiscountForAllOffers);
     }
 }

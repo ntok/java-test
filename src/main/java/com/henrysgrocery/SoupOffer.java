@@ -9,11 +9,12 @@ import java.util.List;
 import static com.henrysgrocery.Item.BREAD;
 
 @AllArgsConstructor
-public class SoupOffer {
+public class SoupOffer implements Offer {
     private static final BigDecimal DISCOUNT_PER_QUANTITY = BREAD.getPrice().divide(BigDecimal.valueOf(2));
     private LocalDateTime offerStartDate;
     private LocalDateTime offerEndDate;
 
+    @Override
     public BigDecimal calculateDiscount(List<Item> shoppingList, LocalDateTime shoppingDate) {
         if ((shoppingDate.isBefore(offerStartDate))
                 || (shoppingDate.isAfter(offerEndDate))) {
