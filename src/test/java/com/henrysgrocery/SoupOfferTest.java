@@ -14,11 +14,10 @@ public class SoupOfferTest {
 
     @Test
     public void whenBasketHasEnoughSoupsAndEnoughBreadForDiscount_thenCalculateBreadDiscount() {
-        SoupOffer  soupOffer=new SoupOffer();
         shoppingItems.add("SOUP");
         shoppingItems.add("SOUP");
         shoppingItems.add("BREAD");
-        BigDecimal discount = soupOffer.calculateDiscount(shoppingItems);
+        BigDecimal discount = new SoupOffer().calculateDiscount(shoppingItems);
         assertThat(discount).isEqualByComparingTo(BigDecimal.valueOf(0.40));
     }
 }

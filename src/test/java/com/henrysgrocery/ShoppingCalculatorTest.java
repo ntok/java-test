@@ -22,6 +22,7 @@ public class ShoppingCalculatorTest {
 
     @Test
     public void whenNoDiscountApplied_thenCalculateShoppingCost() {
+        when(soupOffer.calculateDiscount(anyList())).thenReturn(BigDecimal.valueOf(0.0));
         List<String> shoppingItems = new ArrayList<String>();
         shoppingItems.add("SOUP");
         shoppingItems.add("BREAD");
@@ -32,6 +33,7 @@ public class ShoppingCalculatorTest {
 
     @Test
     public void whenItemListIsEmpty_thenCalculateShoppingCostAsZero() {
+        when(soupOffer.calculateDiscount(anyList())).thenReturn(BigDecimal.valueOf(0.0));
         BigDecimal calculation = new ShoppingCalculator(new ArrayList<String>(),soupOffer).calculate();
         assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(0));
     }
