@@ -39,4 +39,21 @@ public class HenrysGroceryAcceptanceTest {
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.90));
     }
 
+    @Test
+    public void whenSixApplesOneMilkInFiveDay_thenCalculateCost() {
+        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), discountCalculators)
+                .calculate(LocalDateTime.now().plusDays(5));
+
+        assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.84));
+    }
+
+    @Test
+    public void whenThreeApplesTwoSoupOneBreadInFiveDay_thenCalculateCost() {
+
+        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, SOUP, SOUP, BREAD), discountCalculators)
+                .calculate(LocalDateTime.now().plusDays(5));
+
+        assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.97));
+    }
+
 }
