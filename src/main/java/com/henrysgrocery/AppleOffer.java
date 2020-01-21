@@ -16,7 +16,8 @@ public class AppleOffer implements Offer {
 
     @Override
     public BigDecimal calculateDiscount(List<Item> shoppingList, LocalDateTime shoppingDate) {
-        if ((shoppingDate.isBefore(offerStartDate))) {
+        if ((shoppingDate.isBefore(offerStartDate))
+                || (shoppingDate.isAfter(offerEndDate))) {
             return BigDecimal.ZERO;
         }
 

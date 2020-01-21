@@ -49,8 +49,14 @@ public class AppleOfferTest {
     }
 
     @Test
-    public void whenShoppingDateIsBeforeThanOfferStartDate_thenCalculateBreadDiscountAsZero() {
+    public void whenShoppingDateIsBeforeThanOfferStartDate_thenCalculateDiscountAsZero() {
         BigDecimal discount = appleOffer.calculateDiscount(singletonList(APPLE), LocalDateTime.now().minusDays(2));
+        Assertions.assertThat(discount).isEqualByComparingTo(BigDecimal.ZERO);
+    }
+
+    @Test
+    public void whenShoppingDateIsAfterThanOfferEndDate_thenCalculateDiscountAsZero() {
+        BigDecimal discount = appleOffer.calculateDiscount(singletonList(APPLE), LocalDateTime.now().plusMonths(2));
         Assertions.assertThat(discount).isEqualByComparingTo(BigDecimal.ZERO);
     }
 
