@@ -1,4 +1,4 @@
-package com.henrysgrocery;
+package com.henrysgrocery.offer;
 
 import lombok.AllArgsConstructor;
 

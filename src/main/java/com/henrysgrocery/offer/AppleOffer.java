@@ -1,10 +1,12 @@
-package com.henrysgrocery;
+package com.henrysgrocery.offer;
+
+import com.henrysgrocery.item.Item;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.henrysgrocery.Item.APPLE;
+import static com.henrysgrocery.item.Item.APPLE;
 
 public class AppleOffer extends Offer implements DiscountCalculator {
 

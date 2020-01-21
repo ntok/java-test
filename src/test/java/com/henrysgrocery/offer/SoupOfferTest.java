@@ -1,5 +1,6 @@
-package com.henrysgrocery;
+package com.henrysgrocery.offer;
 
+import com.henrysgrocery.offer.SoupOffer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,8 +8,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static com.henrysgrocery.Item.BREAD;
-import static com.henrysgrocery.Item.SOUP;
+import static com.henrysgrocery.item.Item.BREAD;
+import static com.henrysgrocery.item.Item.SOUP;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 

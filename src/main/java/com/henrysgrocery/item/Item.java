@@ -1,4 +1,4 @@
-package com.henrysgrocery;
+package com.henrysgrocery.item;
 
 import lombok.Getter;
 

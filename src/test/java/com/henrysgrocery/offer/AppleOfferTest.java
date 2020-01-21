@@ -1,4 +1,4 @@
-package com.henrysgrocery;
+package com.henrysgrocery.offer;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static com.henrysgrocery.Item.*;
+import static com.henrysgrocery.item.Item.*;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;

@@ -1,5 +1,8 @@
-package com.henrysgrocery;
+package com.henrysgrocery.checkout;
 
+import com.henrysgrocery.item.Item;
+import com.henrysgrocery.offer.AppleOffer;
+import com.henrysgrocery.offer.SoupOffer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -12,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.henrysgrocery.Item.*;
+import static com.henrysgrocery.item.Item.*;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ShoppingCalculatorTest {
+public class ShoppingCheckoutTest {
 
     @Mock
     private SoupOffer soupOffer;
@@ -31,23 +34,23 @@ public class ShoppingCalculatorTest {
 
     @Test
     public void whenNoDiscountApplied_thenCalculateShoppingCost() {
-        BigDecimal calculation = new ShoppingCalculator(asList(SOUP, BREAD, MILK), Collections.emptyList()).calculate(LocalDateTime.now());
+        BigDecimal cost = new ShoppingCheckout(asList(SOUP, BREAD, MILK), Collections.emptyList()).checkout(LocalDateTime.now());
 
-        assertThat(calculation).isEqualTo(BigDecimal.valueOf(2.75));
+        assertThat(cost).isEqualTo(BigDecimal.valueOf(2.75));
     }
 
     @Test
     public void whenItemListIsEmpty_thenCalculateShoppingCostAsZero() {
         when(soupOffer.calculateDiscount(anyList(), any())).thenReturn(BigDecimal.valueOf(0.0));
 
-        BigDecimal calculation = new ShoppingCalculator(new ArrayList<>(), Arrays.asList(soupOffer)).calculate(LocalDateTime.now());
+        BigDecimal cost = new ShoppingCheckout(new ArrayList<>(), Arrays.asList(soupOffer)).checkout(LocalDateTime.now());
 
-        assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(0));
+        assertThat(cost).isEqualByComparingTo(BigDecimal.valueOf(0));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenItemListIsNull_thenCalculateShoppingCostAsZero() {
-        new ShoppingCalculator(null, Arrays.asList(soupOffer)).calculate(LocalDateTime.now());
+        new ShoppingCheckout(null, Arrays.asList(soupOffer)).checkout(LocalDateTime.now());
     }
 
     @Test
@@ -56,9 +59,9 @@ public class ShoppingCalculatorTest {
         List<Item> items = asList(SOUP, SOUP, BREAD, MILK, APPLE);
 
         LocalDateTime shoppingDate = LocalDateTime.now();
-        BigDecimal calculation = new ShoppingCalculator(items, Arrays.asList(soupOffer)).calculate(shoppingDate);
+        BigDecimal cost = new ShoppingCheckout(items, Arrays.asList(soupOffer)).checkout(shoppingDate);
 
-        assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(3.10));
+        assertThat(cost).isEqualByComparingTo(BigDecimal.valueOf(3.10));
         verify(soupOffer).calculateDiscount(items, shoppingDate);
     }
 
@@ -71,9 +74,9 @@ public class ShoppingCalculatorTest {
         List<Item> items = asList(SOUP, SOUP, BREAD, MILK, APPLE);
 
         LocalDateTime shoppingDate = LocalDateTime.now();
-        BigDecimal calculation = new ShoppingCalculator(items, Arrays.asList(soupOffer, appleOffer)).calculate(shoppingDate);
+        BigDecimal cost = new ShoppingCheckout(items, Arrays.asList(soupOffer, appleOffer)).checkout(shoppingDate);
 
-        assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(3.09));
+        assertThat(cost).isEqualByComparingTo(BigDecimal.valueOf(3.09));
         verify(soupOffer).calculateDiscount(items, shoppingDate);
     }
 

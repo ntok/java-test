@@ -1,5 +1,9 @@
 package com.henrysgrocery;
 
+import com.henrysgrocery.checkout.ShoppingCheckout;
+import com.henrysgrocery.offer.AppleOffer;
+import com.henrysgrocery.offer.DiscountCalculator;
+import com.henrysgrocery.offer.SoupOffer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.henrysgrocery.Item.*;
+import static com.henrysgrocery.item.Item.*;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,35 +29,35 @@ public class HenrysGroceryAcceptanceTest {
 
     @Test
     public void whenThreeTinsOfSoupAndTwoBreadToday_thenCalculateCost() {
-        BigDecimal calculation = new ShoppingCalculator(asList(SOUP, SOUP, SOUP, BREAD, BREAD), discountCalculators)
-                .calculate(LocalDateTime.now());
+        BigDecimal cost = new ShoppingCheckout(asList(SOUP, SOUP, SOUP, BREAD, BREAD), discountCalculators)
+                .checkout(LocalDateTime.now());
 
-        assertThat(calculation).isEqualTo(BigDecimal.valueOf(3.15));
+        assertThat(cost).isEqualTo(BigDecimal.valueOf(3.15));
     }
 
     @Test
     public void whenSixApplesAndSingleMilkToday_thenCalculateCost() {
-        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), discountCalculators)
-                .calculate(LocalDateTime.now());
+        BigDecimal cost = new ShoppingCheckout(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), discountCalculators)
+                .checkout(LocalDateTime.now());
 
-        assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.90));
+        assertThat(cost).isEqualTo(BigDecimal.valueOf(1.90));
     }
 
     @Test
     public void whenSixApplesOneMilkInFiveDay_thenCalculateCost() {
-        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), discountCalculators)
-                .calculate(LocalDateTime.now().plusDays(5));
+        BigDecimal cost = new ShoppingCheckout(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), discountCalculators)
+                .checkout(LocalDateTime.now().plusDays(5));
 
-        assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.84));
+        assertThat(cost).isEqualTo(BigDecimal.valueOf(1.84));
     }
 
     @Test
     public void whenThreeApplesTwoSoupOneBreadInFiveDay_thenCalculateCost() {
 
-        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, SOUP, SOUP, BREAD), discountCalculators)
-                .calculate(LocalDateTime.now().plusDays(5));
+        BigDecimal cost = new ShoppingCheckout(asList(APPLE, APPLE, APPLE, SOUP, SOUP, BREAD), discountCalculators)
+                .checkout(LocalDateTime.now().plusDays(5));
 
-        assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.97));
+        assertThat(cost).isEqualTo(BigDecimal.valueOf(1.97));
     }
 
 }
