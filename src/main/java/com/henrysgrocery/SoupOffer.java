@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.henrysgrocery.Item.BREAD;
+import static com.henrysgrocery.Item.SOUP;
 
 @AllArgsConstructor
 public class SoupOffer implements Offer {
@@ -21,12 +22,10 @@ public class SoupOffer implements Offer {
             return BigDecimal.ZERO;
         }
 
-        long soupCount = (shoppingList.stream().filter(item -> item.equals(Item.SOUP)).count());
-        BigDecimal discountQuantity = BigDecimal.valueOf(soupCount / 2);
+        BigDecimal discountQuantity = BigDecimal.valueOf((getItemCount(shoppingList, SOUP)) / 2);
         BigDecimal totalDiscountFromOffer = DISCOUNT_PER_QUANTITY.multiply(discountQuantity);
 
-        long breadCount = (shoppingList.stream().filter(item -> item.equals(Item.BREAD)).count());
-        BigDecimal breadCost = BREAD.getPrice().multiply(BigDecimal.valueOf(breadCount));
+        BigDecimal breadCost = BREAD.getPrice().multiply(BigDecimal.valueOf((getItemCount(shoppingList, BREAD))));
 
         return breadCost.min(totalDiscountFromOffer);
     }

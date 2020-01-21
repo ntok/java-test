@@ -9,11 +9,11 @@ import java.util.List;
 import static com.henrysgrocery.Item.APPLE;
 
 @AllArgsConstructor
-public class AppleOffer implements Offer{
+public class AppleOffer implements Offer {
 
     @Override
     public BigDecimal calculateDiscount(List<Item> shoppingList, LocalDateTime shoppingDate) {
-        long discountQuantity =  (shoppingList.stream().filter(item -> item.equals(APPLE)).count());
+        long discountQuantity = getItemCount(shoppingList, APPLE);
 
         return BigDecimal.valueOf(0.01).multiply(BigDecimal.valueOf(discountQuantity));
     }
