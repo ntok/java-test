@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.henrysgrocery.Item.*;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
@@ -23,18 +25,18 @@ public class ShoppingCalculatorTest {
     @Test
     public void whenNoDiscountApplied_thenCalculateShoppingCost() {
         when(soupOffer.calculateDiscount(anyList())).thenReturn(BigDecimal.valueOf(0.0));
-        List<String> shoppingItems = new ArrayList<String>();
-        shoppingItems.add("SOUP");
-        shoppingItems.add("BREAD");
-        shoppingItems.add("MILK");
-        BigDecimal calculation =  new ShoppingCalculator(shoppingItems, soupOffer).calculate();
+
+        BigDecimal calculation = new ShoppingCalculator(asList(SOUP, BREAD, MILK), soupOffer).calculate();
+
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(2.75));
     }
 
     @Test
     public void whenItemListIsEmpty_thenCalculateShoppingCostAsZero() {
         when(soupOffer.calculateDiscount(anyList())).thenReturn(BigDecimal.valueOf(0.0));
-        BigDecimal calculation = new ShoppingCalculator(new ArrayList<String>(),soupOffer).calculate();
+
+        BigDecimal calculation = new ShoppingCalculator(new ArrayList<>(), soupOffer).calculate();
+
         assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(0));
     }
 
@@ -46,14 +48,12 @@ public class ShoppingCalculatorTest {
     @Test
     public void whenBuySoupGetHalfBreadDiscountApplied_thenCalculateShoppingCost() {
         when(soupOffer.calculateDiscount(anyList())).thenReturn(BigDecimal.valueOf(0.4));
-        List<String> shoppingItems = new ArrayList<String>();
-        shoppingItems.add("SOUP");
-        shoppingItems.add("SOUP");
-        shoppingItems.add("BREAD");
-        shoppingItems.add("MILK");
-        BigDecimal calculation = new ShoppingCalculator(shoppingItems,soupOffer).calculate();
-        verify(soupOffer).calculateDiscount(shoppingItems);
+        List<Item> items = asList(SOUP, SOUP, BREAD, MILK);
+
+        BigDecimal calculation = new ShoppingCalculator(items, soupOffer).calculate();
+
         assertThat(calculation).isEqualByComparingTo(BigDecimal.valueOf(3.00));
+        verify(soupOffer).calculateDiscount(items);
     }
 
 }

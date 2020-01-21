@@ -8,15 +8,15 @@ import java.util.List;
 @AllArgsConstructor
 public class ShoppingCalculator {
 
-    private List<String> items;
+    private List<Item> items;
     private SoupOffer soupOffer;
 
     public BigDecimal calculate() {
-        if(items==null){
+        if (items == null) {
             throw new IllegalArgumentException("Shopping items is null");
         }
         BigDecimal basketPrice = items.stream()
-                .map(s -> Item.valueOf(s.toUpperCase()).getPrice())
+                .map(Item::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         return basketPrice.subtract(soupOffer.calculateDiscount(items));
     }

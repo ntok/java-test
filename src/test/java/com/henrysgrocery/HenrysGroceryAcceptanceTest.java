@@ -3,22 +3,19 @@ package com.henrysgrocery;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
+import static com.henrysgrocery.Item.BREAD;
+import static com.henrysgrocery.Item.SOUP;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HenrysGroceryAcceptanceTest {
     @Test
     public void whenThreeTinsOfSoupAndTwoBreadToday_thenCalculateCost() {
-        List<String> shoppingItems=new ArrayList<String>();
-        shoppingItems.add("SOUP");
-        shoppingItems.add("SOUP");
-        shoppingItems.add("SOUP");
-        shoppingItems.add("BREAD");
-        shoppingItems.add("BREAD");
-        ShoppingCalculator shoppingCalculator = new ShoppingCalculator(shoppingItems,new SoupOffer());
+        ShoppingCalculator shoppingCalculator = new ShoppingCalculator(asList(SOUP, SOUP, SOUP, BREAD, BREAD), new SoupOffer());
+
         BigDecimal calculation = shoppingCalculator.calculate();
+
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(3.15));
     }
 }
