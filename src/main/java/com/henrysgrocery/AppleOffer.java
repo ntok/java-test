@@ -11,6 +11,9 @@ import static com.henrysgrocery.Item.APPLE;
 @AllArgsConstructor
 public class AppleOffer implements Offer {
 
+    private LocalDateTime offerStartDate;
+    private LocalDateTime offerEndDate;
+
     @Override
     public BigDecimal calculateDiscount(List<Item> shoppingList, LocalDateTime shoppingDate) {
         long discountQuantity = getItemCount(shoppingList, APPLE);

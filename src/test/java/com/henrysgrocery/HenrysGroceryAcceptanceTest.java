@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.henrysgrocery.Item.*;
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +19,8 @@ public class HenrysGroceryAcceptanceTest {
     @Before
     public void setUp() {
         offers = asList(new SoupOffer(LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(7)),
-                new AppleOffer());
+                new AppleOffer(LocalDateTime.now().plusDays(3), LocalDateTime.now().plusMonths(1).with(lastDayOfMonth()))
+        );
     }
 
     @Test
@@ -31,7 +33,7 @@ public class HenrysGroceryAcceptanceTest {
 
     @Test
     public void whenSixApplesAndSingleMilkToday_thenCalculateCost() {
-        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, APPLE, APPLE, MILK), offers)
+        BigDecimal calculation = new ShoppingCalculator(asList(APPLE, APPLE, APPLE, APPLE, APPLE, APPLE, MILK), offers)
                 .calculate(LocalDateTime.now());
 
         assertThat(calculation).isEqualTo(BigDecimal.valueOf(1.90));
