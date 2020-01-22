@@ -1,6 +1,12 @@
-# Java Exercise
+
+ # Java Exercise
 
 This is a simple exercise to allow you to demostrate your software engineering skillset. It's completly up to you how long you give yourself, stop when you're happy with the quality of your work, but we don't expect it to take too long.
+
+## How To Run
+ 1. Build the project with command `./gradlew clean build`
+ 2. Run with the following command `java -jar build/libs/java-test-1.0-SNAPSHOT.jar`
+ 3. Alternatively, you can run  `HenrysGroceryApplication` class in your IDE 
 
 ## Instructions
   1. Please fork this repository and work on your fork.

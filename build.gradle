@@ -5,6 +5,14 @@ plugins {
 group 'com.henrysgrocery'
 version '1.0-SNAPSHOT'
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.henrysgrocery.HenrysGroceryApplication'
+        )
+    }
+}
+
 sourceCompatibility = 1.8
 
 repositories {
